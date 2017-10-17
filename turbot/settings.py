@@ -1,0 +1,3 @@
+MINIMUM_SBD_FOR_UPVOTE = float(0.001)
+UPVOTE_WEIGHTS = (+1, +100)
+BOT_ACCOUNT = 'turbot'
