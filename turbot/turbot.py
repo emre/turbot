@@ -9,6 +9,7 @@ import settings
 from steem import Steem
 from steem.commit import Commit
 from steem.post import Post
+from steembase.exceptions import VotingInvalidOnArchivedPost
 
 logger = logging.getLogger('turbot')
 logger.setLevel(logging.DEBUG)
@@ -127,6 +128,12 @@ class TransactionListener(object):
             weight = self.upvote_weight
 
             post.upvote(weight=weight, voter=self.watch_account)
+
+        except VotingInvalidOnArchivedPost as e:
+            logger.info('Archived post. Cannot upvote. %s', op['memo'])
+            self.refund(
+                op, message='Couldnt vote. Archived post. %s' % op['memo'])
+            return
         except Exception as e:
             if 'already voted' in e.args[0]:
                 self.refund(op, message='Already upvoted. %s' % op['memo'])

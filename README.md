@@ -19,11 +19,20 @@ Turbot does the following though:
 - Process these blocks and transactions.
 - If a transaction directed to the bot account, turbot spots it and upvotes
 the post in the memo.
-- If memo is not valid, it automatically refunds it. If the post is already
-upvoted, it also refunds the SBD for it.
 - Turbot upvotes the related content with a random vote weight between 1-100.
 - You can safely start/stop the bot. It stores the state and do not
 make duplicate processing on already processed blocks.
+
+#### Refunds
+
+Turbot refunds SBD if:
+
+- the post is archived
+- the post is already upvoted
+- transaction doesn't cover the minimum SBD
+- the post URL is invalid
+
+<img src="https://i.hizliresim.com/Qpv1L3.png">
 
 #### Installation and Running
 
@@ -43,4 +52,7 @@ MINIMUM_SBD_FOR_UPVOTE = float(0.002)
 UPVOTE_WEIGHTS = (+1, +100)
 BOT_ACCOUNT = 'turbot'
 ```
+
+@turbot is now online for experimental usage, you can use it, it doesn't have a good STEEM power since
+his wallet is very tiny but he will make sure you will get the upvote. :)
 
