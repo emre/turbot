@@ -137,8 +137,13 @@ class TransactionListener(object):
         except Exception as e:
             if 'already voted' in e.args[0]:
                 self.refund(op, message='Already upvoted. %s' % op['memo'])
-            logger.info('Already voted: %s. Skipping.', op['memo'])
-            return
+                logger.info('Already voted: %s. Skipping.', op['memo'])
+                return
+
+            if 'Read timed' in e.args[0]:
+                logger.info('Node is not responding. Trying again to upvote.')
+                return self.upvote(op)
+
         logger.info('Upvoted %s with weight: %s', op['memo'], weight)
 
     def run(self):
